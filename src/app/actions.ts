@@ -1,21 +1,52 @@
 'use server'
 
-type MyActionResult = {
-  type: 'MY_ACTION'
-}
+import { z } from 'zod'
 
-type AdditionalArguments = { hoge: string }
-type InputData = FormData
+export type ServerErrors = z.typeToFlattenedError<FormInput>['fieldErrors']
+type MyActionResult =
+  | {
+      errors: ServerErrors
+      message: string
+      success: false
+    }
+  | {
+      errors: undefined
+      message: string
+      success: true
+    }
+
+type AdditionalArguments = { userId: string }
+
+const schema = z.object({
+  name: z
+    .string()
+    .max(10, { message: 'server error 10文字以内で入力してください' }),
+})
+
+type FormInput = z.infer<typeof schema>
 
 export const myAction = async (
-  { hoge }: AdditionalArguments,
-  formData: InputData
+  _: AdditionalArguments,
+  input: FormInput
 ): Promise<MyActionResult> => {
-  await new Promise<void>((resolve) => {
-    setTimeout(() => {
-      resolve()
-    }, 3000)
-  })
-  console.log(hoge, formData)
-  return { type: 'MY_ACTION' }
+  const result = schema.safeParse(input)
+  if (result.success) {
+    await new Promise<void>((resolve) => {
+      setTimeout(() => {
+        resolve()
+      }, 3000)
+    })
+
+    return {
+      errors: undefined,
+      message: 'success',
+      success: true,
+    }
+  } else {
+    return {
+      errors: result.error.flatten().fieldErrors,
+      message: 'error',
+      success: false,
+    }
+  }
 }
