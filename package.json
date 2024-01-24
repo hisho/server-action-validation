@@ -3,18 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "run-p dev:*",
-    "dev:next": "next dev -p 3000",
-    "build": "run-s build:next",
-    "build:next": "next build",
-    "start": "next start",
-    "lint": "run-p lint:*",
-    "lint:next": "next lint --dir src --ignore-path .prettierignore --max-warnings 0",
-    "lint:typecheck": "tsc --pretty --noEmit",
-    "lint:prettier": "prettier --check .",
-    "format": "run-s format:*",
-    "format:eslint": "bun run lint:next --fix",
-    "format:prettier": "bun run lint:prettier --write"
+    "dev": "run-z dev:next",
+    "dev:next": "run-z --then next dev -p 3000",
+    "build": "run-z build:next",
+    "build:next": "run-z --then next build",
+    "start": "run-z --then next start",
+    "lint": "run-z lint:next lint:typecheck lint:prettier",
+    "lint:next": "run-z --then next lint --dir src --ignore-path .prettierignore --max-warnings 0",
+    "lint:typecheck": "run-z --then tsc --pretty --noEmit",
+    "lint:prettier": "run-z --then prettier --check .",
+    "format": "run-z format:eslint format:prettier",
+    "format:eslint": "run-z --then bun run lint:next --fix",
+    "format:prettier": "run-z --then bun run lint:prettier --write"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -43,6 +43,7 @@
     "postcss": "^8",
     "prettier": "^3.2.4",
     "prettier-plugin-tailwindcss": "^0.5.11",
+    "run-z": "^2.0.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   },
