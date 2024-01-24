@@ -13,8 +13,8 @@
     "lint:typecheck": "tsc --pretty --noEmit",
     "lint:prettier": "prettier --check .",
     "format": "run-s format:*",
-    "format:eslint": "pnpm lint:next --fix",
-    "format:prettier": "pnpm lint:prettier --write"
+    "format:eslint": "bun run lint:next --fix",
+    "format:prettier": "bun run lint:prettier --write"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
