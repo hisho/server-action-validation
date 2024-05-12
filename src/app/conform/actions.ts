@@ -19,6 +19,7 @@ export const conformAction = async (_: unknown, formData: FormData) => {
     return {
       message: 'error',
       submission: submission.reply(),
+      success: false,
     }
   }
 
@@ -30,6 +31,9 @@ export const conformAction = async (_: unknown, formData: FormData) => {
 
   return {
     message: 'success',
-    submission: submission.reply(),
+    submission: submission.reply({
+      resetForm: true,
+    }),
+    success: true,
   }
 }

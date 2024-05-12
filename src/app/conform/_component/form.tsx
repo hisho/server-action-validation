@@ -35,8 +35,7 @@ export const Form = ({ className }: Props) => {
   })
 
   useEffect(() => {
-    if (lastResult?.submission.status === 'success') {
-      form.reset()
+    if (lastResult?.success === true) {
       window.alert(lastResult.message)
     }
   }, [lastResult])
