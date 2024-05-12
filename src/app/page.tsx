@@ -1,12 +1,9 @@
-import { Form } from '@/app/_component/form'
+import Link from 'next/link'
 
-export default function () {
+export default function Page() {
   return (
-    <main>
-      <div className={'mx-auto w-full max-w-xl'}>
-        <h1 className={'text-4xl uppercase'}>Form</h1>
-        <Form className={'flex flex-col'} />
-      </div>
-    </main>
+    <div>
+      <Link href={'/react-hook-form'}>react-hook-form</Link>
+    </div>
   )
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { ServerErrors, myAction } from '@/app/actions'
+import { ServerErrors, myAction } from '@/app/react-hook-form/actions'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ComponentProps, useState } from 'react'
 import { useForm } from 'react-hook-form'
